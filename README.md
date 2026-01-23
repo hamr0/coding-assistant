@@ -27,21 +27,13 @@ No GPU required - runs on CPU.
 
 ## Usage
 
-### CLI Chat (Interactive)
+### CLI Chat
 
 ```bash
 ./chat.sh
 ```
 
-Interactive mode for direct terminal usage.
-
-### CLI Chat (One-Shot)
-
-```bash
-./chat.sh "Write a Python function to reverse a string"
-```
-
-Get a single response and exit.
+Interactive terminal chat. Type your questions, get responses, continue the conversation.
 
 ### API Server
 

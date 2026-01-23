@@ -9,8 +9,7 @@
 ║                                                               ║
 ║  DAILY USE                                                    ║
 ║  ──────────                                                   ║
-║  ./chat.sh                           Start chat               ║
-║  ./chat.sh "your question"           Ask one question         ║
+║  ./chat.sh                           Interactive chat         ║
 ║  ./server.sh                         Start API server         ║
 ║                                                               ║
 ║  MODEL MANAGEMENT                                             ║

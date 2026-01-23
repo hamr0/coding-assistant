@@ -1,8 +1,7 @@
 #!/bin/bash
-# CLI Chat - Interactive terminal chat or one-shot questions
-# Usage: ./chat.sh                                    (interactive mode)
-#        ./chat.sh "your question here"               (one-shot mode)
-# Press Ctrl+C to exit interactive mode
+# CLI Chat - Interactive terminal chat with the model
+# Usage: ./chat.sh
+# Press Ctrl+C to exit
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -23,25 +22,7 @@ if [ ! -f "$MODEL_PATH" ]; then
     exit 1
 fi
 
-# Handle one-shot mode (with prompt argument)
-if [ $# -gt 0 ]; then
-    PROMPT="$*"
-    echo "=== One-Shot Mode ==="
-    echo "Model: $ACTIVE_MODEL"
-    echo ""
-    "${LLAMA_CPP_DIR}/build/bin/llama-cli" \
-        --model "$MODEL_PATH" \
-        --threads "$N_THREADS" \
-        --ctx-size "$CONTEXT_SIZE" \
-        --temp "$TEMPERATURE" \
-        --top-p "$TOP_P" \
-        --repeat-penalty "$REPEAT_PENALTY" \
-        --prompt "$PROMPT" \
-        --log-disable
-    exit 0
-fi
-
-# Interactive mode
+# Interactive chat
 echo "=== Coding Assistant Chat ==="
 echo "Model:   $ACTIVE_MODEL"
 echo "Threads: $N_THREADS"

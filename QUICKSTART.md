@@ -24,11 +24,6 @@ cd ~/PycharmProjects/coding-assistant
 ./chat.sh
 ```
 
-### Ask One Question
-```bash
-./chat.sh "Write a Python function to reverse a string"
-```
-
 ### Start API Server (for OpenCode/Droid)
 ```bash
 ./server.sh
