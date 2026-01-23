@@ -26,13 +26,13 @@ mkdir -p ~/.config/opencode
   "provider": {
     "llamacpp": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "llama.cpp (local)",
+      "name": "Local Model",
       "options": {
         "baseURL": "http://127.0.0.1:8080/v1"
       },
       "models": {
-        "qwen2.5-coder-7b": {
-          "name": "Qwen2.5 Coder 7B"
+        "local": {
+          "name": "Local Model"
         }
       }
     }
@@ -48,13 +48,13 @@ cat > ~/.config/opencode/opencode.json <<'EOF'
   "provider": {
     "llamacpp": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "llama.cpp (local)",
+      "name": "Local Model",
       "options": {
         "baseURL": "http://127.0.0.1:8080/v1"
       },
       "models": {
-        "qwen2.5-coder-7b": {
-          "name": "Qwen2.5 Coder 7B"
+        "local": {
+          "name": "Local Model"
         }
       }
     }
@@ -62,6 +62,8 @@ cat > ~/.config/opencode/opencode.json <<'EOF'
 }
 EOF
 ```
+
+**Note:** Using generic "local" model name means you never need to update this config when switching models.
 
 ## Droid CLI Configuration
 
@@ -77,8 +79,8 @@ mkdir -p ~/.config/droid
 {
   "custom_models": [
     {
-      "model_display_name": "Qwen2.5 Coder 7B [Local]",
-      "model": "qwen2.5-coder-7b",
+      "model_display_name": "Local Model",
+      "model": "local",
       "base_url": "http://127.0.0.1:8080/v1",
       "api_key": "not-needed",
       "provider": "generic-chat-completion-api",
@@ -94,8 +96,8 @@ cat > ~/.config/droid/config.json <<'EOF'
 {
   "custom_models": [
     {
-      "model_display_name": "Qwen2.5 Coder 7B [Local]",
-      "model": "qwen2.5-coder-7b",
+      "model_display_name": "Local Model",
+      "model": "local",
       "base_url": "http://127.0.0.1:8080/v1",
       "api_key": "not-needed",
       "provider": "generic-chat-completion-api",
@@ -106,14 +108,16 @@ cat > ~/.config/droid/config.json <<'EOF'
 EOF
 ```
 
+**Note:** Using generic "local" model name means you never need to update this config when switching models.
+
 ## Configuration Details
 
 | Setting | Value | Notes |
 |---------|-------|-------|
 | **Base URL** | `http://127.0.0.1:8080/v1` | Local server endpoint |
 | **Port** | `8080` | Configured in `config.sh` |
-| **Model Name** | `qwen2.5-coder-7b` | Must match `ACTIVE_MODEL` in `config.sh` |
-| **Max Tokens** | `8000` | Matches `CONTEXT_SIZE=8192` |
+| **Model Name** | `local` | Generic name - works with any model |
+| **Max Tokens** | `8000` | Matches `CONTEXT_SIZE` in `config.sh` |
 | **API Key** | `not-needed` | Local server doesn't require auth |
 
 ## Switching Models
