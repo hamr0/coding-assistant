@@ -1,6 +1,6 @@
-# OpenCode/Droid Configuration
+# CLI Tools Setup (OpenCode & Droid)
 
-Guide to configure OpenCode and Droid CLI to use your local llama.cpp server.
+Guide to configure OpenCode and Droid CLI tools to use your local llama.cpp server.
 
 ## Prerequisites
 
