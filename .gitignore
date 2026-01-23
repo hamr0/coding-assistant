@@ -1,0 +1,18 @@
+# Large model files
+models/*.gguf
+
+# llama.cpp repository
+llama.cpp/
+
+# Log files
+*.log
+
+# macOS
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

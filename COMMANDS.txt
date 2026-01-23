@@ -1,0 +1,35 @@
+╔═══════════════════════════════════════════════════════════════╗
+║           CODING ASSISTANT - COMMAND REFERENCE                ║
+╠═══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  FIRST TIME SETUP                                             ║
+║  ────────────────                                             ║
+║  ./setup.sh                          Build llama.cpp (once)   ║
+║  ./download-model.sh qwen2.5-coder-7b  Download model (once) ║
+║                                                               ║
+║  DAILY USE                                                    ║
+║  ──────────                                                   ║
+║  ./chat.sh                           Start chat               ║
+║  ./chat.sh "your question"           Ask one question         ║
+║  ./server.sh                         Start API server         ║
+║                                                               ║
+║  MODEL MANAGEMENT                                             ║
+║  ─────────────────                                            ║
+║  ./download-model.sh                 List available models    ║
+║  ./download-model.sh qwen2.5-coder-3b  Download model        ║
+║  nano config.sh                      Switch active model      ║
+║                                                               ║
+║  CONFIGURATION                                                ║
+║  ──────────────                                               ║
+║  nano config.sh                      Edit all settings        ║
+║  nano models.conf                    Add new models           ║
+║                                                               ║
+║  HELP                                                         ║
+║  ────                                                         ║
+║  cat README.md                       Full documentation       ║
+║  cat QUICKSTART.md                   Quick start guide        ║
+║  cat COMMANDS.txt                    This reference (duh!)    ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+API Endpoint for OpenCode/Droid: http://127.0.0.1:8080/v1
