@@ -1,6 +1,8 @@
-# CLI Tools Setup (OpenCode & Droid)
+# CLI Tools Setup (OpenCode)
 
-Guide to configure OpenCode and Droid CLI tools to use your local llama.cpp server.
+Guide to configure OpenCode to use your local llama.cpp server.
+
+> **Note:** Droid (Factory CLI) currently doesn't support local models - see section below.
 
 ## Prerequisites
 
@@ -8,7 +10,7 @@ Guide to configure OpenCode and Droid CLI tools to use your local llama.cpp serv
 2. Download a model: `./download-model.sh qwen2.5-coder-7b`
 3. Start the server: `./server.sh`
 
-Keep the server running while using OpenCode/Droid.
+Keep the server running while using OpenCode.
 
 ## OpenCode Configuration
 
@@ -67,58 +69,36 @@ EOF
 
 ## Droid CLI Configuration
 
-**File Location:** `~/.factory/config.json`
+> **⚠️ Known Issue:** Droid (Factory CLI) currently does not work with local models. It ignores the `base_url` and routes requests through Factory's remote servers. Use OpenCode instead for local models.
 
-Create the directory if it doesn't exist:
-```bash
-mkdir -p ~/.config/droid
-```
+**File Location:** `~/.factory/settings.json` (managed through Droid UI)
 
-**Configuration:**
-```json
-{
-  "custom_models": [
-    {
-      "model_display_name": "Local Model",
-      "model": "local",
-      "base_url": "http://127.0.0.1:8080/v1",
-      "api_key": "not-needed",
-      "provider": "generic-chat-completion-api",
-      "max_tokens": 8000
-    }
-  ]
-}
-```
+If Factory fixes this issue in the future, add a custom model through Droid's settings with:
+- Base URL: `http://127.0.0.1:8080/v1`
+- Provider: `generic-chat-completion-api`
+- API Key: `not-needed`
 
-**Create the file:**
-```bash
-cat > ~/.config/droid/config.json <<'EOF'
-{
-  "custom_models": [
-    {
-      "model_display_name": "Local Model",
-      "model": "local",
-      "base_url": "http://127.0.0.1:8080/v1",
-      "api_key": "not-needed",
-      "provider": "generic-chat-completion-api",
-      "max_tokens": 8000
-    }
-  ]
-}
-EOF
-```
+## Server Parameters (config.sh)
 
-**Note:** Using generic "local" model name means you never need to update this config when switching models.
+All server settings are in `config.sh`. Edit and restart server to apply:
 
-## Configuration Details
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `ACTIVE_MODEL` | `qwen2.5-coder-7b` | Model ID (from models.conf) |
+| `N_THREADS` | `6` | CPU threads (leave 1 for system) |
+| `CONTEXT_SIZE` | `4096` | Context window (higher = more memory) |
+| `TEMPERATURE` | `0.5` | Creativity (0.1-1.0, lower = focused) |
+| `TOP_P` | `0.95` | Nucleus sampling |
+| `REPEAT_PENALTY` | `1.1` | Reduce repetition |
+| `SERVER_PORT` | `8080` | API server port |
+
+## OpenCode Configuration Details
 
 | Setting | Value | Notes |
 |---------|-------|-------|
-| **Base URL** | `http://127.0.0.1:8080/v1` | Local server endpoint |
-| **Port** | `8080` | Configured in `config.sh` |
+| **Base URL** | `http://127.0.0.1:8080/v1` | Must match `SERVER_PORT` in config.sh |
 | **Model Name** | `local` | Generic name - works with any model |
-| **Max Tokens** | `8000` | Matches `CONTEXT_SIZE` in `config.sh` |
-| **API Key** | `not-needed` | Local server doesn't require auth |
+| **API Key** | not needed | Local server has no auth |
 
 ## Switching Models
 
@@ -131,7 +111,7 @@ nano config.sh                       # Change ACTIVE_MODEL
 ./server.sh                          # Restart (type x first if running)
 ```
 
-OpenCode/Droid configs don't need to change - they use a generic "local" model name.
+OpenCode config doesn't need to change - it uses a generic "local" model name.
 
 ## Verification
 
@@ -165,26 +145,13 @@ curl http://127.0.0.1:8080/v1/chat/completions \
 - Server not running: Start with `./server.sh`
 - Wrong port: Check `SERVER_PORT` in `config.sh`
 
-### "Model not found" or Generic Responses
+### Generic or wrong responses
 
-If the model gives generic responses like "Hello! How can I assist you?" and ignores your actual question:
+If the model ignores your question or gives unexpected responses:
 
-**Cause:** Model name mismatch between `config.sh` and OpenCode/Droid config.
-
-**Fix:**
-```bash
-# Check what model the server is using
-cat ~/PycharmProjects/coding-assistant/config.sh | grep ACTIVE_MODEL
-
-# Update OpenCode to match
-nano ~/.config/opencode/opencode.json
-# Change the model ID to match ACTIVE_MODEL
-
-# Restart server
-cd ~/PycharmProjects/coding-assistant
-# Press Ctrl+C, then:
-./server.sh
-```
+1. Check server is running: `curl http://127.0.0.1:8080/v1/models`
+2. Restart server: type `x` in server terminal, then `./server.sh`
+3. If using specific model name in OpenCode config, ensure it matches `ACTIVE_MODEL` in config.sh
 
 ### Stopping the Server
 
@@ -206,20 +173,18 @@ pkill -9 llama-server
 
 ### Slow responses
 - Try smaller model: `qwen2.5-coder-3b`
-- Reduce `CONTEXT_SIZE` in `config.sh`
-- Reduce `max_tokens` in OpenCode/Droid config
+- Reduce `CONTEXT_SIZE` in config.sh
 
 ### Port already in use
 1. Change `SERVER_PORT` in `config.sh` (e.g., to `8081`)
-2. Update `baseURL` in OpenCode/Droid configs
+2. Update `baseURL` in OpenCode config
 3. Restart server
 
-## Quick Setup Commands
+## Quick Setup Command
 
-Copy-paste to set up both in one go:
+Copy-paste to set up OpenCode:
 
 ```bash
-# Create OpenCode config
 mkdir -p ~/.config/opencode
 cat > ~/.config/opencode/opencode.json <<'EOF'
 {
@@ -227,38 +192,20 @@ cat > ~/.config/opencode/opencode.json <<'EOF'
   "provider": {
     "llamacpp": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "llama.cpp (local)",
+      "name": "Local Model",
       "options": {
         "baseURL": "http://127.0.0.1:8080/v1"
       },
       "models": {
-        "qwen2.5-coder-7b": {
-          "name": "Qwen2.5 Coder 7B"
+        "local": {
+          "name": "Local Model"
         }
       }
     }
   }
 }
 EOF
-
-# Create Droid config
-mkdir -p ~/.config/droid
-cat > ~/.config/droid/config.json <<'EOF'
-{
-  "custom_models": [
-    {
-      "model_display_name": "Qwen2.5 Coder 7B [Local]",
-      "model": "qwen2.5-coder-7b",
-      "base_url": "http://127.0.0.1:8080/v1",
-      "api_key": "not-needed",
-      "provider": "generic-chat-completion-api",
-      "max_tokens": 8000
-    }
-  ]
-}
-EOF
-
-echo "Configuration created. Start server with: ./server.sh"
+echo "OpenCode configured. Start server with: ./server.sh"
 ```
 
 ## Usage Workflow
@@ -269,9 +216,9 @@ echo "Configuration created. Start server with: ./server.sh"
    ./server.sh
    ```
 
-2. Use OpenCode/Droid normally - they'll connect to your local model
+2. Use OpenCode normally - it connects to your local model
 
-3. Stop server when done: `Ctrl+C`
+3. Stop server when done: type `x` and Enter in server terminal
 
 ## Performance Tips
 

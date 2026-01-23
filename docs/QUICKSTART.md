@@ -50,8 +50,13 @@ Then configure your IDE to use: `http://127.0.0.1:8080/v1`
    ```
 3. Save and restart chat/server
 
-### Change Settings (threads, temperature, etc.)
-Edit `config.sh` - all settings are there with comments
+### Change Settings (threads, temperature, context, etc.)
+Edit `config.sh` - key settings:
+- `ACTIVE_MODEL` - which model to use
+- `N_THREADS` - CPU threads (default: 6)
+- `CONTEXT_SIZE` - context window (default: 4096)
+- `TEMPERATURE` - creativity 0.1-1.0 (default: 0.5)
+- `SERVER_PORT` - API port (default: 8080)
 
 ## Troubleshooting
 
