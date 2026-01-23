@@ -24,6 +24,7 @@ fi
 echo "=== Starting OpenAI-Compatible API Server ==="
 echo "Model:    $ACTIVE_MODEL"
 echo "File:     $MODEL_FILE"
+echo "Template: $CHAT_TEMPLATE"
 echo "Address:  http://${SERVER_HOST}:${SERVER_PORT}"
 echo "Threads:  $N_THREADS"
 echo "Context:  $CONTEXT_SIZE"
@@ -43,7 +44,7 @@ echo ""
     --temp "$TEMPERATURE" \
     --top-p "$TOP_P" \
     --repeat-penalty "$REPEAT_PENALTY" \
-    --chat-template chatml \
+    --chat-template "$CHAT_TEMPLATE" \
     --log-disable &
 
 SERVER_PID=$!

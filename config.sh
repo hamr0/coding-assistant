@@ -29,10 +29,16 @@ LLAMA_CPP_DIR="${SCRIPT_DIR}/llama.cpp"
 # Get model filename from models.conf
 get_model_file() {
     local model_id="$1"
-    local model_file=$(grep "^${model_id}|" "${SCRIPT_DIR}/models.conf" | cut -d'|' -f3)
-    echo "${model_file}"
+    grep "^${model_id}|" "${SCRIPT_DIR}/models.conf" | cut -d'|' -f3
 }
 
-# Get full model path
+# Get chat template from models.conf
+get_chat_template() {
+    local model_id="$1"
+    grep "^${model_id}|" "${SCRIPT_DIR}/models.conf" | cut -d'|' -f6
+}
+
+# Get full model path and template
 MODEL_FILE=$(get_model_file "$ACTIVE_MODEL")
 MODEL_PATH="${MODELS_DIR}/${MODEL_FILE}"
+CHAT_TEMPLATE=$(get_chat_template "$ACTIVE_MODEL")
