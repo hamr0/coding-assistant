@@ -116,77 +116,18 @@ EOF
 | **Max Tokens** | `8000` | Matches `CONTEXT_SIZE=8192` |
 | **API Key** | `not-needed` | Local server doesn't require auth |
 
-## Using Different Models
+## Switching Models
 
-**IMPORTANT:** The model name in OpenCode/Droid configs MUST match `ACTIVE_MODEL` in `config.sh`.
+See [SWITCHING_MODELS.md](SWITCHING_MODELS.md) for details.
 
-If you switch models (e.g., to `qwen2.5-coder-3b`):
-
-1. Update `config.sh`:
-   ```bash
-   nano ~/PycharmProjects/coding-assistant/config.sh
-   # Change: ACTIVE_MODEL="qwen2.5-coder-3b"
-   ```
-
-2. Update OpenCode config:
-   ```bash
-   nano ~/.config/opencode/opencode.json
-   # Change model ID from "qwen2.5-coder-7b" to "qwen2.5-coder-3b"
-   # Change display name to match
-   ```
-
-3. Update Droid config (if using):
-   ```bash
-   nano ~/.config/droid/config.json
-   # Change "model": "qwen2.5-coder-3b"
-   # Change "model_display_name" accordingly
-   ```
-
-4. Restart the server:
-   ```bash
-   # Press Ctrl+C in server terminal, then:
-   ./server.sh
-   ```
-
-### Quick Model Switch Script
-
-To avoid mismatches, use this helper:
-
+Quick version:
 ```bash
-# Switch to 3B model
-cd ~/PycharmProjects/coding-assistant
-./download-model.sh qwen2.5-coder-3b
-
-# Update all configs at once
-MODEL="qwen2.5-coder-3b"
-
-# Update server config
-sed -i 's/ACTIVE_MODEL=.*/ACTIVE_MODEL="'$MODEL'"/' config.sh
-
-# Update OpenCode config
-cat > ~/.config/opencode/opencode.json <<EOF
-{
-  "\$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "llamacpp": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "llama.cpp (local)",
-      "options": {
-        "baseURL": "http://127.0.0.1:8080/v1"
-      },
-      "models": {
-        "$MODEL": {
-          "name": "Qwen2.5 Coder 3B"
-        }
-      }
-    }
-  }
-}
-EOF
-
-# Restart server
-echo "Configs updated. Restart server with: ./server.sh"
+./download-model.sh MODEL_ID        # Download
+nano config.sh                       # Change ACTIVE_MODEL
+./server.sh                          # Restart (type x first if running)
 ```
+
+OpenCode/Droid configs don't need to change - they use a generic "local" model name.
 
 ## Verification
 
