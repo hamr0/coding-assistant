@@ -67,7 +67,7 @@ EOF
 
 ## Droid CLI Configuration
 
-**File Location:** `~/.config/droid/config.json`
+**File Location:** `~/.factory/config.json`
 
 Create the directory if it doesn't exist:
 ```bash
