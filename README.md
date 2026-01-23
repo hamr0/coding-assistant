@@ -116,6 +116,8 @@ Edit `config.sh` to customize:
 - **SERVER_HOST**: API server host (default: 127.0.0.1)
 - **SERVER_PORT**: API server port (default: 8080)
 
+For detailed tuning guide, see [PERFORMANCE_TUNING.md](PERFORMANCE_TUNING.md)
+
 ## Performance
 
 ### Expected Performance (Your Hardware: i7-8665U, 31GB RAM)
@@ -193,17 +195,12 @@ Start with **qwen2.5-coder-7b** for best results.
 
 ## OpenCode/Droid Integration
 
-1. Start the server:
-   ```bash
-   ./server.sh
-   ```
+See [CLI_TOOLS_SETUP.md](CLI_TOOLS_SETUP.md) for complete configuration guide.
 
-2. Configure your tool:
-   - **API Endpoint**: `http://127.0.0.1:8080/v1`
-   - **API Key**: (leave empty or use any value)
-   - **Model**: `llama.cpp` or leave as default
-
-3. Test code completion and generation
+Quick version:
+1. Start the server: `./server.sh`
+2. Configure API endpoint: `http://127.0.0.1:8080/v1`
+3. Model name: `qwen2.5-coder-7b`
 
 ## Design Philosophy
 
