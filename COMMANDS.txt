@@ -27,6 +27,7 @@
 ║  ────                                                         ║
 ║  cat README.md                       Full documentation       ║
 ║  cat QUICKSTART.md                   Quick start guide        ║
+║  cat SWITCHING_MODELS.md             How to switch models     ║
 ║  cat PERFORMANCE_TUNING.md           Speed optimization       ║
 ║  cat CLI_TOOLS_SETUP.md              OpenCode/Droid setup    ║
 ║  cat COMMANDS.txt                    This reference (duh!)    ║

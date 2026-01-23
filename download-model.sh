@@ -14,15 +14,17 @@ if [ $# -eq 0 ]; then
     echo ""
     echo "Available models:"
     echo ""
-    printf "%-25s %-15s %-10s %s\n" "MODEL_ID" "QUANTIZATION" "SIZE" "REPO"
-    printf "%-25s %-15s %-10s %s\n" "--------" "------------" "----" "----"
-    while IFS='|' read -r model_id repo filename quant size; do
+    printf "%-22s %-10s %-8s %-12s %s\n" "MODEL_ID" "QUANT" "SIZE" "TEMPLATE" "REPO"
+    printf "%-22s %-10s %-8s %-12s %s\n" "--------" "-----" "----" "--------" "----"
+    while IFS='|' read -r model_id repo filename quant size template; do
         if [[ ! "$model_id" =~ ^# ]] && [ -n "$model_id" ]; then
-            printf "%-25s %-15s %-10s %s\n" "$model_id" "$quant" "$size" "$repo"
+            printf "%-22s %-10s %-8s %-12s %s\n" "$model_id" "$quant" "$size" "$template" "$repo"
         fi
     done < "${SCRIPT_DIR}/models.conf"
     echo ""
     echo "Example: $0 qwen2.5-coder-7b"
+    echo ""
+    echo "See SWITCHING_MODELS.md for how to switch between models."
     exit 0
 fi
 
