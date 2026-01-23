@@ -39,5 +39,4 @@ echo ""
     --temp "$TEMPERATURE" \
     --top-p "$TOP_P" \
     --repeat-penalty "$REPEAT_PENALTY" \
-    --conversation \
     --log-disable
