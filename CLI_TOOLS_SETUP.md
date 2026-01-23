@@ -118,21 +118,75 @@ EOF
 
 ## Using Different Models
 
+**IMPORTANT:** The model name in OpenCode/Droid configs MUST match `ACTIVE_MODEL` in `config.sh`.
+
 If you switch models (e.g., to `qwen2.5-coder-3b`):
 
 1. Update `config.sh`:
    ```bash
-   ACTIVE_MODEL="qwen2.5-coder-3b"
+   nano ~/PycharmProjects/coding-assistant/config.sh
+   # Change: ACTIVE_MODEL="qwen2.5-coder-3b"
    ```
 
-2. Update OpenCode/Droid config files:
-   - Change `"model": "qwen2.5-coder-3b"`
-   - Change display name accordingly
-
-3. Restart the server:
+2. Update OpenCode config:
    ```bash
+   nano ~/.config/opencode/opencode.json
+   # Change model ID from "qwen2.5-coder-7b" to "qwen2.5-coder-3b"
+   # Change display name to match
+   ```
+
+3. Update Droid config (if using):
+   ```bash
+   nano ~/.config/droid/config.json
+   # Change "model": "qwen2.5-coder-3b"
+   # Change "model_display_name" accordingly
+   ```
+
+4. Restart the server:
+   ```bash
+   # Press Ctrl+C in server terminal, then:
    ./server.sh
    ```
+
+### Quick Model Switch Script
+
+To avoid mismatches, use this helper:
+
+```bash
+# Switch to 3B model
+cd ~/PycharmProjects/coding-assistant
+./download-model.sh qwen2.5-coder-3b
+
+# Update all configs at once
+MODEL="qwen2.5-coder-3b"
+
+# Update server config
+sed -i 's/ACTIVE_MODEL=.*/ACTIVE_MODEL="'$MODEL'"/' config.sh
+
+# Update OpenCode config
+cat > ~/.config/opencode/opencode.json <<EOF
+{
+  "\$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llamacpp": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llama.cpp (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "$MODEL": {
+          "name": "Qwen2.5 Coder 3B"
+        }
+      }
+    }
+  }
+}
+EOF
+
+# Restart server
+echo "Configs updated. Restart server with: ./server.sh"
+```
 
 ## Verification
 
@@ -166,8 +220,39 @@ curl http://127.0.0.1:8080/v1/chat/completions \
 - Server not running: Start with `./server.sh`
 - Wrong port: Check `SERVER_PORT` in `config.sh`
 
-### "Model not found"
-- Model name mismatch: Ensure config files use same model name as `ACTIVE_MODEL` in `config.sh`
+### "Model not found" or Generic Responses
+
+If the model gives generic responses like "Hello! How can I assist you?" and ignores your actual question:
+
+**Cause:** Model name mismatch between `config.sh` and OpenCode/Droid config.
+
+**Fix:**
+```bash
+# Check what model the server is using
+cat ~/PycharmProjects/coding-assistant/config.sh | grep ACTIVE_MODEL
+
+# Update OpenCode to match
+nano ~/.config/opencode/opencode.json
+# Change the model ID to match ACTIVE_MODEL
+
+# Restart server
+cd ~/PycharmProjects/coding-assistant
+# Press Ctrl+C, then:
+./server.sh
+```
+
+### Server Won't Quit with Ctrl+C
+
+**Fix:** Update your `server.sh` script (latest version handles this).
+
+If still stuck, find and kill the process:
+```bash
+# Find the process
+ps aux | grep llama-server
+
+# Kill it
+kill -9 <PID>
+```
 
 ### Slow responses
 - Try smaller model: `qwen2.5-coder-3b`

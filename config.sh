@@ -8,12 +8,12 @@
 #   3. Restart server/chat
 
 # Active model (must match MODEL_ID in models.conf)
-ACTIVE_MODEL="qwen2.5-coder-7b"
+ACTIVE_MODEL="qwen2.5-coder-3b"
 
 # Model parameters
 N_THREADS=7              # Leave 1 thread for system
 CONTEXT_SIZE=8192        # Context window size
-TEMPERATURE=0.7          # Lower = more focused, higher = more creative
+TEMPERATURE=0.5          # Lower = more focused, higher = more creative
 TOP_P=0.95              # Nucleus sampling
 REPEAT_PENALTY=1.1      # Penalize repetition
 

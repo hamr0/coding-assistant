@@ -6,6 +6,9 @@
 # Press Ctrl+C to stop
 set -e
 
+# Handle Ctrl+C properly
+trap 'echo ""; echo "Shutting down server..."; exit 0' SIGINT SIGTERM
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 
