@@ -40,7 +40,7 @@ echo ""
 echo "Press Ctrl+C to stop"
 echo ""
 
-"${LLAMA_CPP_DIR}/build/bin/llama-server" \
+exec "${LLAMA_CPP_DIR}/build/bin/llama-server" \
     --model "$MODEL_PATH" \
     --host "$SERVER_HOST" \
     --port "$SERVER_PORT" \

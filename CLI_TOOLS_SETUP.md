@@ -243,7 +243,22 @@ cd ~/PycharmProjects/coding-assistant
 
 ### Server Won't Quit with Ctrl+C
 
-**Fix:** Update your `server.sh` script (latest version handles this).
+**Note:** Use Ctrl+C (not Ctrl+Z). Ctrl+Z suspends the process but doesn't kill it.
+
+**Fix:** Update your `server.sh` script (latest version uses `exec` for proper signal handling).
+
+If you accidentally used Ctrl+Z (suspended):
+```bash
+# List background jobs
+jobs
+
+# Kill the suspended job
+kill %1
+
+# Or bring it to foreground and kill
+fg
+# Then press Ctrl+C
+```
 
 If still stuck, find and kill the process:
 ```bash
@@ -251,6 +266,9 @@ If still stuck, find and kill the process:
 ps aux | grep llama-server
 
 # Kill it
+kill <PID>
+
+# Force kill if needed
 kill -9 <PID>
 ```
 
