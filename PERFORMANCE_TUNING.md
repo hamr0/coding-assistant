@@ -377,7 +377,7 @@ Note the generation speed and compare.
 
 **Config file:** `~/PycharmProjects/coding-assistant/config.sh`
 
-**After changes:** Restart server (`Ctrl+C` then `./server.sh`)
+**After changes:** Restart server (type `x` then Enter, then `./server.sh`)
 
 **Download models:** `./download-model.sh <model-id>`
 
