@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 
 # Check if llama.cpp is built
-if [ ! -f "${LLAMA_CPP_DIR}/llama-server" ]; then
+if [ ! -f "${LLAMA_CPP_DIR}/build/bin/llama-server" ]; then
     echo "ERROR: llama.cpp not built. Run ./setup.sh first."
     exit 1
 fi
@@ -37,7 +37,7 @@ echo ""
 echo "Press Ctrl+C to stop"
 echo ""
 
-"${LLAMA_CPP_DIR}/llama-server" \
+"${LLAMA_CPP_DIR}/build/bin/llama-server" \
     --model "$MODEL_PATH" \
     --host "$SERVER_HOST" \
     --port "$SERVER_PORT" \

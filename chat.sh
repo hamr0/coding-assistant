@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 
 # Check if llama.cpp is built
-if [ ! -f "${LLAMA_CPP_DIR}/llama-cli" ]; then
+if [ ! -f "${LLAMA_CPP_DIR}/build/bin/llama-cli" ]; then
     echo "ERROR: llama.cpp not built. Run ./setup.sh first."
     exit 1
 fi
@@ -29,7 +29,7 @@ if [ $# -gt 0 ]; then
     echo "=== One-Shot Mode ==="
     echo "Model: $ACTIVE_MODEL"
     echo ""
-    "${LLAMA_CPP_DIR}/llama-cli" \
+    "${LLAMA_CPP_DIR}/build/bin/llama-cli" \
         --model "$MODEL_PATH" \
         --threads "$N_THREADS" \
         --ctx-size "$CONTEXT_SIZE" \
@@ -51,7 +51,7 @@ echo "Type your questions or code requests."
 echo "Press Ctrl+C to exit."
 echo ""
 
-"${LLAMA_CPP_DIR}/llama-cli" \
+"${LLAMA_CPP_DIR}/build/bin/llama-cli" \
     --model "$MODEL_PATH" \
     --threads "$N_THREADS" \
     --ctx-size "$CONTEXT_SIZE" \

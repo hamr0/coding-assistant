@@ -12,9 +12,9 @@ echo ""
 
 # Check for required tools
 echo "[1/4] Checking dependencies..."
-for cmd in git make gcc g++; do
+for cmd in git cmake gcc g++; do
     if ! command -v $cmd &> /dev/null; then
-        echo "ERROR: $cmd not found. Please install build-essential."
+        echo "ERROR: $cmd not found. Please install: sudo apt install build-essential cmake"
         exit 1
     fi
 done
@@ -34,8 +34,9 @@ fi
 echo ""
 echo "[3/4] Building llama.cpp (this may take a few minutes)..."
 cd llama.cpp
-make clean &> /dev/null || true
-make -j$(nproc)
+rm -rf build &> /dev/null || true
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
 cd ..
 echo "✓ llama.cpp built successfully"
 

@@ -8,7 +8,7 @@ Zero-bloat setup for running coding LLMs locally with llama.cpp.
 - **RAM**: 8GB+ (31GB for comfortable 7B models)
 - **Disk**: 5-10GB per model
 - **OS**: Linux, macOS, or WSL2
-- **Tools**: git, make, gcc/g++, wget or curl
+- **Tools**: git, cmake, gcc/g++, wget or curl
 
 No GPU required - runs on CPU.
 
@@ -228,7 +228,9 @@ To update llama.cpp:
 ```bash
 cd llama.cpp
 git pull
-make clean && make -j$(nproc)
+rm -rf build
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
 ```
 
 ## License
