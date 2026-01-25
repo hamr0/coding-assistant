@@ -193,8 +193,28 @@ SERVER_PORT=8081   # Alternative port
 
 **To try different quantization:**
 
-Check available quantizations on HuggingFace:
-- https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF
+### Finding Available Quantizations
+
+1. Go to the model's HuggingFace repo (check `models.conf` for the repo name)
+2. Click "Files and versions" tab
+3. Look for `.gguf` files - the quantization is in the filename
+
+**Example repos:**
+- Qwen: https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/tree/main
+- DeepSeek: https://huggingface.co/TheBloke/deepseek-coder-6.7b-instruct-GGUF/tree/main
+- CodeLlama: https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/tree/main
+
+**Common filenames you'll see:**
+```
+qwen2.5-coder-7b-instruct-q2_k.gguf      # Smallest, fastest, lowest quality
+qwen2.5-coder-7b-instruct-q3_k_m.gguf    # Small, fast
+qwen2.5-coder-7b-instruct-q4_k_m.gguf    # <-- Default, best balance
+qwen2.5-coder-7b-instruct-q5_k_m.gguf    # Larger, better quality
+qwen2.5-coder-7b-instruct-q6_k.gguf      # Large, high quality
+qwen2.5-coder-7b-instruct-q8_0.gguf      # Largest, near-original quality
+```
+
+### Adding a Different Quantization
 
 Add to `models.conf`:
 ```bash
@@ -355,6 +375,7 @@ Note the generation speed and compare.
 2. Use all threads: `N_THREADS=8`
 3. Close other applications
 4. Check CPU usage: `htop` (should be ~700% when generating)
+5. Try a smaller quantization (Q3_K_M) - see [Quantization Explained](#quantization-explained)
 
 ### Model quality not good enough
 
@@ -366,7 +387,8 @@ Note the generation speed and compare.
 
 1. Use smaller model: 3B instead of 7B
 2. Reduce context: `CONTEXT_SIZE=2048`
-3. Close other applications
+3. Try a smaller quantization (Q3_K_M or Q2_K) - see [Quantization Explained](#quantization-explained)
+4. Close other applications
 
 ### Responses feel "mechanical"
 
