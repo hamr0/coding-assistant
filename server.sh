@@ -50,17 +50,20 @@ echo ""
 SERVER_PID=$!
 echo "Server PID: $SERVER_PID"
 echo ""
-echo "Type 'x' and press Enter to stop the server"
+echo "Press Ctrl+C to stop the server"
 echo ""
 
-# Wait for user input
-while true; do
-    read -r input
-    if [ "$input" = "x" ] || [ "$input" = "X" ]; then
-        echo "Stopping server..."
-        kill $SERVER_PID 2>/dev/null
-        wait $SERVER_PID 2>/dev/null
-        echo "Server stopped."
-        exit 0
-    fi
-done
+# Set up trap to handle Ctrl+C
+cleanup() {
+    echo ""
+    echo "Stopping server..."
+    kill $SERVER_PID 2>/dev/null
+    wait $SERVER_PID 2>/dev/null
+    echo "Server stopped."
+    exit 0
+}
+
+trap cleanup SIGINT
+
+# Wait for server process
+wait $SERVER_PID
