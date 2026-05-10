@@ -37,6 +37,11 @@ That's the whole thing.
 Prereqs: Linux (tested on Fedora; Debian/Ubuntu fine), `git`, `cmake`, `gcc`, `g++`. About 4 GB free RAM for a 7B Q4_K_M model and 4–8 GB disk.
 
 ```bash
+sudo dnf install gcc-c++ cmake git    # Fedora/RHEL (gcc-c++ ships separately from gcc)
+sudo apt install build-essential cmake git    # Debian/Ubuntu
+```
+
+```bash
 git clone https://github.com/hamr0/coding-assistant.git
 cd coding-assistant
 ./setup.sh                              # ~5 min: clone + build llama.cpp

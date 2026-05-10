@@ -11,10 +11,14 @@ echo "=== Minimal Coding Assistant Setup ==="
 echo ""
 
 # Check for required tools
+# Note: on Fedora/RHEL, g++ ships in the separate gcc-c++ package — gcc alone
+# isn't enough. Debian/Ubuntu bundle both in build-essential.
 echo "[1/4] Checking dependencies..."
 for cmd in git cmake gcc g++; do
     if ! command -v $cmd &> /dev/null; then
-        echo "ERROR: $cmd not found. Please install: sudo apt install build-essential cmake"
+        echo "ERROR: $cmd not found. Install with:"
+        echo "  Fedora/RHEL:    sudo dnf install gcc-c++ cmake git"
+        echo "  Debian/Ubuntu:  sudo apt install build-essential cmake git"
         exit 1
     fi
 done

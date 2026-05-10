@@ -7,6 +7,20 @@ ballpark, grouped by milestone rather than per-commit.
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-05-10
+
+Repo polish + prereq fix surfaced when re-pulling `llama.cpp` on a
+fresh Fedora box: `setup.sh`'s prereq check failed on missing `g++`
+but only suggested the Debian package.
+
+### Fixed
+- `setup.sh`: prerequisite error message now lists per-distro
+  install commands (Fedora `gcc-c++`, Debian `build-essential`)
+  instead of assuming `apt`. `gcc-c++` ships separately from `gcc`
+  on Fedora/RHEL — `gcc` alone passes `command -v gcc` but the
+  build still fails for lack of a C++ compiler.
+- README quickstart: explicit per-distro install one-liners.
+
 ### Infrastructure
 - Root `package.json` added (private; metadata only — this is a
   shell project, package.json exists for the version badge).

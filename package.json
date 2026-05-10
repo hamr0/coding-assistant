@@ -1,6 +1,6 @@
 {
   "name": "coding-assistant",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Lightweight llama.cpp wrapper for quantized local SLM deployment. No GPU required.",
   "repository": {
