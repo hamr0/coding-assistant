@@ -1,0 +1,11 @@
+{
+  "name": "coding-assistant",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Lightweight llama.cpp wrapper for quantized local SLM deployment. No GPU required.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamr0/coding-assistant.git"
+  },
+  "license": "Apache-2.0"
+}
