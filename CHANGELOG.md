@@ -7,6 +7,10 @@ ballpark, grouped by milestone rather than per-commit.
 
 ## [Unreleased]
 
+### Changed
+
+- **Agent/IDE scratch gitignored and de-tracked.** `.gitignore` now default-denies every dot-directory (`.*/`), re-admitting only what ships (`.github/`). Per-machine agent/IDE state (`.claude/`, `.litectx/`, `.idea/`, …) regenerates locally and only added noise and churn; any already-committed copies are removed from tracking (local files kept on disk). Repo hygiene only.
+
 ## [0.3.1] — 2026-05-10
 
 Repo polish + prereq fix surfaced when re-pulling `llama.cpp` on a
